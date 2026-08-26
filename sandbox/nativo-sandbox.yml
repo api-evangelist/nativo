@@ -1,0 +1,90 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://sdk.nativo.com/docs/setting-up-with-android-studio,
+  https://sdk.nativo.com/docs/getting-started-android, https://sdk.nativo.com/docs/setup-for-testing,
+  https://sdk.nativo.com/docs/consent-management, https://api-docs.nativo.com/reference/preview-links
+name: Nativo
+summary: >-
+  Nativo publishes a real test mode for its MOBILE SDKs — an in-SDK demo-ad switch with per-ad-type
+  selection and a developer log channel — but publishes NO sandbox for the Nativo API V3. There is
+  no test host, no test-vs-live key prefix, no test mode flag and no fixture data for the REST API:
+  a token issued from admin.nativo.com is a production token and a POST /v3/campaigns creates a
+  real campaign. The nearest thing to a safe rehearsal on the platform side is the article preview
+  link surface, which returns preview URLs rather than serving.
+api_v3:
+  sandbox_published: false
+  test_host: none
+  key_prefixes: none — the Personal Access Token carries no test/live discriminator
+  test_mode_flag: none
+  fixtures: none
+  note: >-
+    Combined with the absence of idempotency keys and of any dry-run mode (see
+    conventions/nativo-conventions.yml), an agent has no way to rehearse a write against this API.
+    The only mitigations Nativo publishes are that DELETE is soft and is_enabled is a toggle.
+  preview_surface:
+    endpoint: GET /v3/data/article-previews/campaign/[campaign_id]
+    docs: https://api-docs.nativo.com/reference/preview-links
+    description: >-
+      Returns article preview links per creative/publication combination that has at least one
+      direct view — a read-only way to see rendered output without serving.
+    example_link_shape: 'http://nativo.net/test?ntv_ccpvw=<token>'
+  placement_flag:
+    field: is_previewable
+    entity: Placement
+    docs: https://api-docs.nativo.com/reference/placements
+mobile_sdk:
+  sandbox_published: true
+  mechanism: in-SDK test advertisements
+  docs: https://sdk.nativo.com/docs/setup-for-testing
+  controls:
+  - name: enableTestAdvertisements()
+    platforms: [ios, android]
+    description: >-
+      Loads demo ads instead of live demand. Call before section initialisation, e.g. in
+      onCreate().
+    published_example: 'NativoSDK.enableTestAdvertisements();'
+  - name: enableTestAdvertisements(NtvTestAdType)
+    platforms: [ios, android]
+    description: Restricts test ads to a single ad type.
+    published_values: [DISPLAY, NATIVE]
+    published_example: 'NativoSDK.enableTestAdvertisements(NtvTestAdType.NATIVE);'
+    reference: https://sdk.nativo.com/docs/ntvtestadtype-android
+    note: >-
+      DISPLAY and NATIVE are the two values that appear in the published quick-start snippets; the
+      NtvTestAdType reference page may enumerate more. Not asserted beyond what is published.
+  - name: enableDevLogs()
+    platforms: [ios, android]
+    description: >-
+      Turns on Nativo developer logging so errors and warnings surface in the console. Nativo
+      recommends enabling it during development.
+    published_example: 'NativoSDK.enableDevLogs();'
+  consent_testing:
+    docs: https://sdk.nativo.com/docs/consent-management
+    method: >-
+      Nativo documents verifying consent plumbing by watching the SDK config request with an HTTP
+      monitor (they recommend Charles Proxy) and checking the query parameters.
+    observe_endpoint: https://jadserve.postrelease.com/sdk/config
+    parameters_to_check:
+    - key: ntv_gpp_consent
+      standard: IAB Global Privacy Platform
+    - key: ntv_gdpr_consent
+      standard: IAB TCF (read from IABTCF_TCString)
+    - key: us_privacy
+      standard: IAB CCPA US Privacy string (read from IABUSPrivacy_String)
+      published_example_value: 1YNN
+    note: >-
+      The consent strings above are published test/verification values from Nativo's own docs.
+      No credential is involved.
+ad_serving_api:
+  sandbox_published: false
+  note: >-
+    The BETA Ad Serving API has no test endpoint. Its published example request uses placeholder
+    values (visitor_id 0000000-0000-0000000, user_ip 1.1.1.1) against the live host, and the site
+    in page_url must already exist in the Nativo system, so it cannot be exercised without an
+    onboarded property.
+onboarding_gate:
+  note: >-
+    Both SDK and API onboarding are relationship-gated. The Android getting-started page opens
+    with "Before getting started with your integration, please ensure that you have contacted your
+    Account Manager", and Ad Serving API access is granted by a CSM.

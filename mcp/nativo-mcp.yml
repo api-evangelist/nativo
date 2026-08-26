@@ -1,0 +1,55 @@
+generated: '2026-08-26'
+method: probed
+source: 'POST tools/list and initialize against https://api-docs.nativo.com/mcp, 2026-08-26'
+name: Nativo
+status: not-published
+summary: >-
+  Nativo does not publish an MCP server. An MCP endpoint DOES answer at
+  https://api-docs.nativo.com/mcp, but it is ReadMe platform infrastructure that ships with every
+  ReadMe-hosted docs project, not a Nativo product surface, and it refuses anonymous callers with
+  a JSON-RPC -32001 "Authorization required" and no OAuth discovery metadata of any kind. Because
+  no tool list, no inputSchema and no auth path can be established, NO type MCPServer pointer is
+  emitted in apis.yml — the pointer would assert a reachable agent surface that we could not
+  reach.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: probed
+probes:
+- url: https://api-docs.nativo.com/mcp
+  method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  accept: application/json, text/event-stream
+  http_status: 401
+  body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+  www_authenticate: absent
+  note: >-
+    No WWW-Authenticate header and no /.well-known/oauth-protected-resource on the host, so there
+    is no discoverable way for a client to obtain a token. Served via Cloudflare in front of
+    Render (rndr-id header), which is ReadMe's own hosting, not Nativo's.
+- url: https://api-docs.nativo.com/mcp
+  method: 'POST initialize (protocolVersion 2025-06-18)'
+  http_status: 401
+  body: '{"jsonrpc":"2.0","error":{"code":-32001,"message":"Authorization required"},"id":null}'
+- url: https://api-docs.nativo.com/.well-known/oauth-protected-resource
+  http_status: 404
+- url: https://api.nativo.com/mcp
+  http_status: 404
+platform_context:
+  host_platform: ReadMe (readme.io), deploy 5.862.1, project subdomain nativo-api-docs
+  evidence: >-
+    The docs page config block enumerates ReadMe's reserved MCP tool names — execute-request,
+    get-endpoint, get-server-variables, list-endpoints, list-specs, search-endpoints, search,
+    fetch. These are ReadMe's generic docs tools, and they operate over a project's uploaded
+    OpenAPI. Nativo's ReadMe project has NO OpenAPI uploaded (apiDefinitions is empty and every
+    reference page is a hand-written markdown page), so even an authorised caller would find
+    nothing for those tools to operate on.
+derived_candidate:
+  written: false
+  reason: >-
+    A candidate tool list is normally derived from OpenAPI operations. Nativo publishes no
+    OpenAPI, so there are no operationIds to bind and nothing to derive from without inventing
+    them. The documented endpoint inventory is recorded in data-model/nativo-data-model.yml
+    instead, sourced from the reference tables.

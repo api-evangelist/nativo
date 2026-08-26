@@ -1,0 +1,167 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://api-docs.nativo.com/docs/api-responses, https://api-docs.nativo.com/docs/auth,
+  https://api-docs.nativo.com/docs/best-practices, https://api-docs.nativo.com/reference/general,
+  https://api-docs.nativo.com/reference/reporting-parameters,
+  https://api-docs.nativo.com/reference/campaigns
+name: Nativo
+api: Nativo API V3
+base_url: https://api.nativo.com/v3
+summary: >-
+  Nativo API V3 is a small, conventional JSON REST API with a uniform response envelope, a Bearer
+  token, path-versioning, and a POST-body reporting query language. It has no idempotency keys, no
+  conditional requests, no request-id header, no rate-limit headers, and no cursor pagination.
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <personal access token>'
+  detail: authentication/nativo-authentication.yml
+versioning:
+  style: path
+  current: v3
+  path_prefix: /v3
+  previous: >-
+    V2 documentation remains published at https://api-docs.nativo.com/v2.0/ .
+  policy: >-
+    "We periodically add resources, or increase the amount of data available for existing
+    resources. This is done in a mostly backward-compatible manner." The stated exception is the
+    metrics, breakdown and filters option sets on reporting resources, which are subject to
+    deprecation.
+  source: https://api-docs.nativo.com/reference/general
+  note: >-
+    The BETA Ad Serving API is explicitly UNVERSIONED — "Does the Ad Serving API use versioning?
+    Currently No, but future version of the API may support versioning."
+response_envelope:
+  shape: '{ status, status_code, messages[], data }'
+  success_value: success
+  failure_value: failed
+  data_key: data
+  errors: errors/nativo-problem-types.yml
+  note: >-
+    The envelope wraps single objects and collections alike — `data` is an object for a GET by id
+    and an array for a list. There is no separate `meta` or `links` block.
+pagination:
+  style: page-number
+  applies_to: reporting resources (POST /data/*)
+  location: request body
+  params:
+  - name: page
+    type: integer
+    default: 1
+    description: The page of results to be returned.
+  - name: page_size
+    type: integer
+    default: 10000
+    description: Number of results to be returned.
+  response_fields: none documented — no total, no next/prev links, no cursor
+  guidance: >-
+    Nativo's own best-practices page recommends a LARGE page size (their example uses 50000) or
+    omitting page_size entirely, explicitly to reduce the number of calls. This is the inverse of
+    the usual advice and is a rate-management strategy, not a performance one.
+  source: https://api-docs.nativo.com/docs/best-practices
+  trafficking_resources: >-
+    No pagination is documented on the CRUD collection endpoints (GET /v3/campaigns,
+    GET /v3/advertisers, GET /v3/ads). The only documented collection filter is advertiser_id on
+    GET /v3/campaigns.
+sorting:
+  applies_to: reporting resources
+  params:
+  - name: sort_by
+    description: Name of the breakdown or metric to sort by.
+  - name: sort_order
+    description: asc or desc.
+filtering:
+  style: >-
+    Reporting resources take a declarative query in the POST body — required start_date, end_date
+    plus timezone, resolution, metrics[], breakdown[], filters[] and exclude_filters[]. Each of
+    metrics, breakdown and filters has its own published option reference page, and options can be
+    incompatible with one another; an invalid combination returns 400.
+  references:
+    metrics: https://api-docs.nativo.com/reference/reporting-parameters-metrics
+    breakdown: https://api-docs.nativo.com/reference/reporting-parameters-breakdown
+    filters: https://api-docs.nativo.com/reference/reporting-parameters-filters
+    timezones: https://api-docs.nativo.com/reference/reporting-timezone-options
+  resolution_values: [hourly, daily, weekly, monthly, day of week, totals]
+  date_format: 'yyyy-mm-ddThh:mm:ssZ (minutes and seconds ignored); yyyy-mm-dd defaults to 00:00:00'
+  note: >-
+    "the order of fields in the payload does not matter". To capture a full day for end_date, the
+    docs instruct using the 23rd hour.
+field_expansion:
+  supported: false
+  note: No expand / include / fields / sparse-fieldset parameter is documented.
+metadata:
+  supported: false
+  note: No customer-defined metadata or tag bag on any resource.
+request_id_tracing:
+  supported: false
+  note: >-
+    No request-id, correlation-id or trace header is documented on requests or responses. There is
+    nothing an integrator can quote back to support to identify a specific call.
+idempotency:
+  supported: false
+  header: none
+  note: >-
+    No Idempotency-Key header, no client-supplied request token, and no conditional-request
+    support (no ETag / If-Match / If-None-Match) is documented anywhere in the Nativo API V3
+    reference. POST /v3/campaigns, /v3/advertisers, /v3/budgets, /v3/ads and /v3/creatives are all
+    unguarded creates: a retried POST after a timeout will create a second object. This is a real
+    gap for an agent, not an omission in this artifact — no Idempotency pointer is emitted in
+    apis.yml because the capability is genuinely absent.
+rate_limit_signaling:
+  headers: none documented
+  status_on_exhaustion: none documented
+  detail: rate-limits/nativo-rate-limits.yml
+dry_run_mode:
+  supported: false
+  note: No preview / validate-only / dry-run mode on any write operation.
+reversibility:
+  grade: documented
+  summary: >-
+    Nativo's write surface is reversible in the two ways an ad platform normally is — deletes are
+    soft, and serving is a toggle — but NO reversal window is stated anywhere in the docs, so this
+    grades `documented` and not `verified`. Do not infer a window; none is published.
+  surfaces:
+  - write_operation: DELETE /v3/campaigns/[id]
+    reversal: >-
+      Soft delete. The docs state plainly: "Since these are soft deletes the campaign is still
+      accessible through the GET endpoint. You can distinguish deleted campaigns because their
+      serving_status field is set to deleted."
+    reversal_operation: none published
+    window: not stated
+    docs: https://api-docs.nativo.com/reference/campaigns
+    note: >-
+      The record survives the delete and remains readable, but no undelete / restore / untrash
+      operation is documented. Recovery is a support conversation, not an API call.
+  - write_operation: DELETE /v3/creatives/[id]
+    reversal: Soft delete, same pattern as campaigns.
+    reversal_operation: none published
+    window: not stated
+    docs: https://api-docs.nativo.com/reference/creatives
+  - write_operation: 'POST/PUT on campaigns, budgets, ads (is_enabled)'
+    reversal: >-
+      Serving is a boolean toggle — `is_enabled` set to false disables the object, and the
+      read-only `serving_status` reports the resulting state (not_ready, paused, not_serving,
+      pre_flight, in_flight, completed, deleted). Setting is_enabled back to true re-enables it.
+    reversal_operation: 'PUT /v3/campaigns/[id] with {"is_enabled": true}'
+    window: not stated — no cutoff is published
+    docs: https://api-docs.nativo.com/reference/campaigns
+  - write_operation: spend already delivered
+    reversal: none
+    window: n/a
+    note: >-
+      Impressions already served and budget already spent are not reversible by any published
+      operation. Disabling a campaign stops future delivery; it does not undo delivery.
+  na: false
+data_freshness:
+  reporting_lag: >-
+    "the data in our reporting API is updated every 5-10 minutes"
+  historical_immutability: >-
+    "Any data outside of the last 2 months (current and previous) will not change" — Nativo
+    instructs integrators to pull historic data once and never re-poll it.
+  source: https://api-docs.nativo.com/docs/best-practices
+cross_links:
+  errors: errors/nativo-problem-types.yml
+  lifecycle: lifecycle/nativo-lifecycle.yml
+  authentication: authentication/nativo-authentication.yml
+  rate_limits: rate-limits/nativo-rate-limits.yml
+  data_model: data-model/nativo-data-model.yml

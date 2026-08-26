@@ -1,0 +1,184 @@
+generated: '2026-08-26'
+method: probed
+source: 'direct HTTPS probe of /.well-known/* on every Nativo-controlled host, 2026-08-26'
+name: Nativo
+summary: >-
+  Nativo serves NO /.well-known documents. Fifty-six probes across seven hosts returned 404 on
+  every path on every host that answers honestly. jadserve.postrelease.com answers 200 to every
+  /.well-known/* path with a 1x1 GIF (GIF89a) — that is the ad server's universal-pixel catch-all,
+  not a document, and it is recorded as a MISS. No WellKnown and no SecurityTxt pointer is emitted
+  in apis.yml, because there is nothing to point at.
+hosts:
+- host: nativo.com
+  note: 301s to ads.life360.com; the origin answers "Invalid .well-known request" HTML on 404.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api.nativo.com
+  note: >-
+    The API host. Returns the platform's own JSON error envelope on every miss, which is itself
+    useful evidence — see errors/nativo-problem-types.yml.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: api-docs.nativo.com
+  note: ReadMe-hosted API documentation.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: sdk.nativo.com
+  note: ReadMe-hosted mobile SDK documentation.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: ads.life360.com
+  note: The corporate site after the Life360 acquisition (Webflow).
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: admin.nativo.com
+  note: The platform console (login).
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: jadserve.postrelease.com
+  note: >-
+    FALSE POSITIVE HOST. Every path below returned HTTP 200 with a GIF89a image/gif body — the ad
+    server's tracking-pixel catch-all, which answers 200 for any unmatched path. None of these is
+    a document; all are recorded as misses and none is saved. A ?wsdl probe on this host returns
+    the same GIF.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: miss
+    body: 'GIF89a (1x1 tracking pixel), not a document'
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/api-catalog
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: miss
+    body: GIF89a
+  - path: /.well-known/agent.json
+    status: 200
+    result: miss
+    body: GIF89a
+result:
+  documents_served: 0
+  security_txt: false
+  api_catalog: false
+  agent_card: false
+  oauth_metadata: false
+pointer_emitted: false
+pointer_note: >-
+  No type WellKnown and no type SecurityTxt pointer is written into apis.yml. Every probe missed,
+  and the only 200s came from an ad-server pixel catch-all. A recorded absence is valid data; a
+  pointer would be a false claim that Nativo serves these surfaces.
+related_machine_readable:
+  note: >-
+    Nativo DOES serve one machine-readable document at a well-known-by-convention location, just
+    not under /.well-known: the IAB sellers.json at the domain root. See
+    conformance/nativo-conformance.yml and conformance/nativo-sellers.json.
+  url: https://iab.nativo.com/sellers.json
+  status: 200

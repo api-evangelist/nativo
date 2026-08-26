@@ -1,0 +1,86 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.nativo.com/docs/api-responses
+docs: https://api-docs.nativo.com/docs/api-responses
+name: Nativo
+format: custom-envelope
+rfc9457: false
+summary: >-
+  Nativo does not use RFC 9457 problem+json. Every Nativo API V3 response — success or failure — is
+  wrapped in the same JSON envelope, and failures are distinguished by status:"failed" plus a
+  messages[] array of {text, level} objects. The envelope was confirmed live: an unauthenticated
+  GET to a non-existent path on api.nativo.com returned exactly this shape.
+envelope:
+  content_type: application/json
+  members:
+  - name: status
+    description: Either "success" or "failed".
+  - name: status_code
+    description: The HTTP status code, repeated in the body.
+  - name: messages
+    description: >-
+      Array of message objects, each with `text` and `level`. `level` is "info" or "error".
+      Null when there are no messages.
+  - name: data
+    description: The main response payload. Not returned for failed requests.
+  observed_example:
+    url: https://api.nativo.com/openapi.json
+    http_status: 404
+    body: >-
+      {"data":null,"messages":[{"level":"error","text":["404 Not Found: The requested URL was not
+      found on the server. If you entered the URL manually please check your spelling and try
+      again."]}],"status":"failed","status_code":404}
+    note: >-
+      Probed 2026-08-26 during contract discovery. Note the divergence from the documented shape:
+      the live `messages[].text` is an ARRAY of strings, while the documented sample response shows
+      `text` as a single string and `status_code` as the string "403" rather than a number.
+      An agent parsing this API must tolerate both.
+documented_example:
+  body: >-
+    {"status":"failed","status_code":"403","messages":[{"text":"Human-readable description",
+    "level":"error"}]}
+problem_types:
+- status: 200
+  title: OK
+  meaning: The request was successful.
+- status: 400
+  title: Bad Request
+  meaning: The request is not well-formed, syntactically incorrect, or violates schema.
+  causes:
+  - The data is not in the expected data format
+  - A field is not available or does not exist
+  - Reporting only — a metric with a missing dependency
+  - Reporting only — a metric incompatible with the requested breakdown
+  - Reporting only — a breakdown with a missing dependency
+  - Reporting only — a breakdown incompatible with another breakdown or filter
+  - Reporting only — the request exceeds resolution limitations
+  remediation: >-
+    Check the metric/breakdown/filter reference pages, which enumerate the current valid options
+    and their dependencies and compatibility.
+  docs: https://api-docs.nativo.com/docs/api-responses
+- status: 403
+  title: Forbidden
+  meaning: >-
+    Authorization failed due to insufficient permissions — the client is not authorized to access
+    this resource, or the credentials are incorrect.
+  remediation: >-
+    Verify the Personal Access Token and the platform role assigned to the API user. The
+    site-targeting search endpoint returns 403 with a descriptive message when the account lacks
+    access to the requested entity type.
+- status: 500
+  title: Internal Server Error
+  meaning: An internal error occurred.
+  remediation: Contact Nativo support.
+- status: 503
+  title: Service Unavailable
+  meaning: The API is currently unavailable due to maintenance.
+  remediation: Retry later; check https://status.nativo.com/ for a declared incident.
+gaps:
+- >-
+  No 401 is documented — authentication failure and authorization failure are both folded into 403.
+- >-
+  No 404 is documented, but 404 is demonstrably returned (see observed_example).
+- No 429 is documented, and no rate-limit response is described anywhere in the docs.
+- >-
+  No machine-readable error code registry — messages[].text is prose only, with no stable
+  identifier an agent can branch on.

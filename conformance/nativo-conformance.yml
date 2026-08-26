@@ -1,0 +1,234 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://iab.nativo.com/sellers.json, https://sdk.nativo.com/docs/consent-management,
+  https://sdk.nativo.com/docs/releases-android,
+  https://ads.life360.com/legal/technical-organizational-measures,
+  https://api-docs.nativo.com/docs/api-responses, https://github.com/life360-oss
+name: Nativo
+summary: >-
+  Nativo conforms to almost none of the generic API standards a scorer looks for — no OAuth 2.0,
+  no OIDC, no RFC 9457, no JSON:API, no idempotency, no OData/SCIM. What it DOES conform to is the
+  standards stack of its own market: the IAB Tech Lab ad-tech specifications. It publishes a
+  machine-readable sellers.json (939 sellers), is TAG-registered, ships IAB GPP / TCF / US Privacy
+  consent plumbing in its SDKs, embeds the IAB Open Measurement SDK, and maintains public forks of
+  Prebid Server and Prebid Mobile. That is a genuine domain-standard posture, and it is the only
+  machine-readable contract Nativo publishes anywhere.
+domain: advertising-technology
+domain_standard_conformance:
+  present: true
+  primary: IAB Tech Lab sellers.json 1.0
+  evidence_artifact: conformance/nativo-sellers.json
+  note: >-
+    sellers.json is the strongest signature here: a versioned, machine-readable document served
+    from a host Nativo controls, whose schema is defined by the IAB Tech Lab and which every
+    programmatic buyer in the market parses. It is served for nativo.com, www.nativo.com AND
+    ads.life360.com — all three 301 to iab.nativo.com/sellers.json — which also confirms the
+    Life360 property inherits the Nativo seller identity rather than declaring its own.
+standards:
+- id: iab-sellers-json
+  name: IAB Tech Lab sellers.json
+  version: '1.0'
+  conforms: true
+  evidence:
+    url: https://iab.nativo.com/sellers.json
+    http_status: 200
+    content_type: application/json
+    saved: conformance/nativo-sellers.json
+    shape: 'contact_email, contact_address, version 1.0, identifiers[], sellers[]'
+    seller_count: 939
+    seller_types:
+      PUBLISHER: 838
+      INTERMEDIARY: 71
+      BOTH: 30
+    contact_email: rtbsupport@nativo.com
+    contact_address: 'Nativo, Inc., 100 N. Pacific Coast Highway, 10th Floor, El Segundo, CA 90245'
+  note: >-
+    Redirect chain probed 2026-08-26: https://nativo.com/sellers.json -> 301 ->
+    https://iab.nativo.com/sellers.json, 200, 160,132 bytes.
+- id: tag-registration
+  name: Trustworthy Accountability Group (TAG) registration
+  conforms: true
+  evidence:
+    url: https://iab.nativo.com/sellers.json
+    field: 'identifiers[0] = { name: TAG-ID, value: 59521ca7cc5e9fee }'
+  note: A TAG-ID is only issued to a company that has completed TAG registration.
+- id: iab-gpp
+  name: IAB Global Privacy Platform (GPP)
+  conforms: true
+  evidence:
+    url: https://sdk.nativo.com/docs/consent-management
+    detail: >-
+      "Starting with v7.2.1 for iOS and v7.2.3 for Android, the Nativo SDK supports the GPP."
+      Consent is transmitted to the ad server as the ntv_gpp_consent query parameter on
+      https://jadserve.postrelease.com/sdk/config.
+- id: iab-tcf
+  name: IAB Europe Transparency & Consent Framework (GDPR TCF)
+  conforms: true
+  evidence:
+    url: https://sdk.nativo.com/docs/consent-management
+    detail: >-
+      SDK reads the IABTCF_TCString shared preference written by any IAB-compliant CMP and passes
+      it through as ntv_gdpr_consent.
+- id: iab-us-privacy
+  name: IAB CCPA / US Privacy String
+  conforms: true
+  evidence:
+    url: https://sdk.nativo.com/docs/consent-management
+    detail: >-
+      SDK reads IABUSPrivacy_String and forwards it as the us_privacy parameter (documented
+      example value 1YNN).
+- id: iab-open-measurement
+  name: IAB Tech Lab Open Measurement SDK
+  version: 1.5.4
+  conforms: true
+  evidence:
+    url: https://sdk.nativo.com/docs/releases-android
+    detail: 'Android SDK v7.2.5 (2025-03-10): "Updated IAB Open Measurement SDK to v1.5.4".'
+- id: vast
+  name: IAB VAST (video ad serving)
+  conforms: true
+  evidence:
+    url: https://sdk.nativo.com/docs/releases-ios
+    detail: >-
+      VAST video support is provided through the Google Interactive Media Ads SDK, updated to
+      v3.23 in iOS SDK v7.2.1. Listed as an optional CocoaPods dependency
+      (pod 'GoogleAds-IMA-iOS-SDK').
+- id: prebid
+  name: Prebid / Prebid Server header bidding
+  conforms: true
+  evidence:
+    url: https://github.com/life360-oss
+    detail: >-
+      The public org that now holds the Nativo SDK repositories also carries forks of
+      prebid-server, prebid-server-java, prebid.github.io, PrebidNativoBidder, and the
+      life360-ads-sdk-android / life360-ads-sdk-ios Prebid Mobile SDKs. PrebidNativoBidder is a
+      Nativo bidder adapter for Prebid.js.
+  confidence: high
+- id: app-ads-txt
+  name: IAB Tech Lab app-ads.txt
+  conforms: true
+  role: consumer / publisher guidance
+  evidence:
+    url: https://sdk.nativo.com/docs/mobile-app-adstxt
+    detail: >-
+      Nativo publishes a "Mobile app-ads.txt" guide instructing app publishers how to declare
+      Nativo as an authorised seller.
+  note: >-
+    Nativo does NOT serve its own /ads.txt or /app-ads.txt — probed 2026-08-26,
+    https://nativo.com/ads.txt and https://nativo.com/app-ads.txt both 404 (they land on the
+    Webflow 404 at ads.life360.com). This is expected: Nativo is the seller side, so sellers.json
+    is the file it is obliged to publish, and it does.
+- id: openrtb
+  name: IAB Tech Lab OpenRTB
+  conforms: unverified
+  evidence:
+    detail: >-
+      Nativo markets an SSP/exchange and its status page lists an "SSP/Exchange" component, and a
+      sellers.json is only meaningful inside an OpenRTB supply chain — but no OpenRTB request or
+      response contract, version, or endpoint is published on any public Nativo surface.
+      Recorded as unverified rather than true; do not credit it without a published contract.
+- id: gdpr
+  name: EU General Data Protection Regulation
+  conforms: true
+  evidence:
+    url: https://ads.life360.com/legal/technical-organizational-measures
+    detail: >-
+      Nativo publishes Technical and Organizational Security Measures (a GDPR Article 32 TOM
+      document) plus an Interest Based Advertising Privacy Policy and a Website Privacy Policy.
+      The TOM page states "Nativo Platform does not have any regulations requirements besides
+      GDPR".
+- id: ccpa
+  name: California Consumer Privacy Act
+  conforms: true
+  evidence:
+    url: https://ads.life360.com/legal/interest-based-ads
+    detail: >-
+      Interest-based-ads policy publishes opt-out rights; the SDK transmits the IAB US Privacy
+      string. AdChoices notice is published at https://ads.life360.com/legal/adchoices.
+- id: oauth2
+  name: OAuth 2.0
+  conforms: false
+  evidence:
+    detail: >-
+      Bearer Personal Access Token only. /.well-known/oauth-authorization-server and
+      /.well-known/oauth-protected-resource both 404 on api.nativo.com.
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence:
+    detail: /.well-known/openid-configuration 404 on every Nativo host probed.
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence:
+    url: https://api-docs.nativo.com/docs/api-responses
+    detail: >-
+      Custom envelope { status, status_code, messages[], data }, application/json — not
+      application/problem+json.
+- id: rfc8594
+  name: RFC 8594 Sunset header
+  conforms: false
+  evidence:
+    detail: No Sunset or Deprecation header is documented or observed.
+- id: pagination
+  name: Pagination
+  conforms: partial
+  evidence:
+    url: https://api-docs.nativo.com/reference/reporting-parameters
+    detail: >-
+      page / page_size on reporting resources only, in the request body. No total count, no next
+      link, no cursor. CRUD collections are unpaginated.
+- id: idempotency
+  name: Idempotent writes
+  conforms: false
+  evidence:
+    detail: No Idempotency-Key, no ETag/If-Match, no client request token on any write operation.
+- id: json-api
+  name: 'JSON:API'
+  conforms: false
+- id: odata
+  name: OData
+  conforms: false
+- id: scim
+  name: SCIM
+  conforms: false
+certifications:
+  published: false
+  statement: >-
+    "Nativo Platform does not have any regulations requirements besides GDPR and has never filed
+    for any certifications."
+  source: https://ads.life360.com/legal/technical-organizational-measures
+  note: >-
+    An unusually direct self-disclosure. No SOC 2, no ISO 27001, no PCI DSS, no HIPAA, no FedRAMP.
+    What IS published in lieu of a certification: two third-party black-box penetration tests per
+    year covering OWASP Top 10, ASVS and business logic, against the Nativo web application AND
+    API, with the executive summary available to customers on request; plus periodic publisher-run
+    third-party audits.
+compliance_program:
+  published: true
+  url: https://ads.life360.com/legal/technical-organizational-measures
+  documents:
+  - name: Technical and Organizational Security Measures
+    url: https://ads.life360.com/legal/technical-organizational-measures
+    last_updated: '2018-08-08'
+    last_reviewed: '2026'
+  - name: Privacy Policy
+    url: https://ads.life360.com/legal/privacy-policy
+  - name: Interest-Based Advertising Policy
+    url: https://ads.life360.com/legal/interest-based-ads
+  - name: Policies and Guidelines
+    url: https://ads.life360.com/legal/policies-and-guidelines
+  - name: AdChoices
+    url: https://ads.life360.com/legal/adchoices
+  - name: Terms of Use
+    url: https://ads.life360.com/legal/terms-of-use
+  controls_summary:
+    hosting: Amazon Web Services, AWS shared responsibility model, multi-region fault tolerance
+    access: least privilege, role-based, VPN required for production, 2FA for engineering, all access logged
+    encryption: HTTPS in transit; data never stored unencrypted outside Nativo servers
+    retention: 'user profile records 45-day TTL after last seen; log records deleted after 2 years'
+    backups: daily database backups, restores tested monthly
+    pen_testing: two third-party black-box penetration tests per year (OWASP Top 10, ASVS, business logic)
+    incident: three-severity breach management program with per-scenario action plans
+    tenancy: multi-tenant SaaS, data separated by organization and role

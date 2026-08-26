@@ -1,0 +1,29 @@
+# Nativo SDK Documentation
+
+> Documentation for Nativo's mobile app SDK. Unlock high-performing ads and premium demand that seamlessly blends with your mobile experience. The Nativo SDK is available for iOS, Android and React Native.
+
+Append .md to any documentation page URL to get its markdown version.
+
+## Guides
+- [iOS SDK](https://sdk.nativo.com/docs/releases-ios.md)
+- [Android SDK](https://sdk.nativo.com/docs/releases-android.md)
+- [Getting Started](https://sdk.nativo.com/docs/getting-started-ios.md)
+- [CocoaPods Integration](https://sdk.nativo.com/docs/cocoapods-integration.md)
+- [Native Article, Display & Story Ads](https://sdk.nativo.com/docs/native-article-ads-ios.md)
+- [Native Video Ad](https://sdk.nativo.com/docs/video-ads-ios.md)
+- [Getting Started](https://sdk.nativo.com/docs/getting-started-android.md)
+- [Setting up with Android Studio](https://sdk.nativo.com/docs/setting-up-with-android-studio.md)
+- [Native Article, Display & Story Ads](https://sdk.nativo.com/docs/native-article-ads-android.md)
+- [Native Video Ad](https://sdk.nativo.com/docs/video-ads-android.md)
+- [Verification](https://sdk.nativo.com/docs/verification-android.md)
+- [Migration Guide](https://sdk.nativo.com/docs/migration-guide-android.md)
+- [Consent Management (GPP)](https://sdk.nativo.com/docs/consent-management.md)
+- [Privacy Disclosures](https://sdk.nativo.com/docs/privacy-disclosures.md)
+- [(ISI) Important Safety Information](https://sdk.nativo.com/docs/important-safety-information-isi.md)
+
+## Pages
+- [Publisher Onboarding](https://sdk.nativo.com/page/publisher-onboarding.md)
+- [Reporting API](https://sdk.nativo.com/page/reporting-api.md)
+
+## Changelog
+- [All versions](https://sdk.nativo.com/changelog/all-versions.md)

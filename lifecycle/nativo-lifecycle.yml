@@ -1,0 +1,133 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://api-docs.nativo.com/reference/general,
+  https://api-docs.nativo.com/reference/marketplace-campaigns,
+  https://api-docs.nativo.com/reference/getting-started-with-the-nativo-ad-serving-api,
+  https://status.nativo.com/api/v2/components.json
+name: Nativo
+summary: >-
+  Nativo runs a path-versioned API (V3 current, V2 docs still published) with a narrow, explicitly
+  scoped deprecation policy: the API surface itself changes "mostly backward-compatibly", and the
+  ONLY things Nativo reserves the right to deprecate are the option sets on the reporting
+  metrics, breakdown and filters parameters. A concrete list of already-removed metrics is
+  published for the Marketplace Campaigns resource. There is no Sunset/Deprecation header
+  (RFC 8594), no published sunset dates, no SLA and no public roadmap.
+versioning:
+  scheme: path
+  current_version: v3
+  current_base: https://api.nativo.com/v3
+  previous_versions:
+  - version: v2
+    docs: https://api-docs.nativo.com/v2.0/
+    status: documentation still published; no sunset date announced
+  statement: >-
+    "Version 3 is the current version of the Nativo API. To access the V2 documentation see here."
+  compatibility: >-
+    "We periodically add resources, or increase the amount of data available for existing
+    resources. This is done in a mostly backward-compatible manner."
+  unversioned_surfaces:
+  - api: Nativo Ad Serving API (BETA)
+    statement: >-
+      "Does the Ad Serving API use versioning? Currently No, but future version of the API may
+      support versioning."
+deprecation_policy:
+  published: true
+  url: https://api-docs.nativo.com/reference/general
+  scope: >-
+    Explicitly limited. "The only exception are options available for the metrics, breakdown, and
+    filters parameters of Reporting resources. These are subject to deprecation. To see the latest
+    set of available options, see the reference page for each parameter."
+  mechanism: >-
+    Removal is communicated by the option disappearing from the parameter reference page, plus a
+    "Deprecated Metrics" section on the affected resource page. There is no changelog entry, no
+    email notice described, and no advance-notice period stated.
+  notice_period: not stated
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_items:
+  - resource: Marketplace Campaigns (POST /data/marketplace)
+    url: https://api-docs.nativo.com/reference/marketplace-campaigns
+    removed_metrics:
+    - companion_asset_clicks
+    - page_views_rate
+    - publisher_ecpm
+    - publisher_cpm
+    - vtr
+    statement: >-
+      "The following metrics are no longer available for the Marketplace Campaigns resource."
+    note: >-
+      Stated as already removed, not as pending removal — no date is given for when they went away.
+  agent_note: >-
+    Because the deprecation surface is a set of enum VALUES rather than operations, an agent cannot
+    detect a deprecation from a spec diff or a response header. The only detection path is a 400
+    Bad Request on a metric that used to work.
+beta_surfaces:
+- api: Nativo Ad Serving API
+  stage: BETA
+  url: https://api-docs.nativo.com/reference/ad-serving-api
+  limitations:
+  - Supports only the native display ad type.
+  - Requires the URL of the site the ad renders on to already exist in the Nativo system.
+  access: granted by a Nativo CSM
+status_page:
+  published: true
+  url: https://status.nativo.com/
+  provider: Atlassian Statuspage
+  page_id: 61y77bfs70dx
+  api: https://status.nativo.com/api/v2/status.json
+  components:
+  - Admin Console
+  - Ad Serving System
+  - SSP/Exchange
+  - Reporting Data and API
+  - Inventory Estimation
+  probed:
+    url: https://status.nativo.com/api/v2/status.json
+    status: 200
+    observed: 'All Systems Operational (2026-08-26)'
+  note: >-
+    Machine-readable — the Statuspage v2 JSON API (status.json, components.json, summary.json,
+    incidents.json) is served anonymously, so an agent can poll component health directly. This is
+    the single most agent-consumable surface Nativo publishes.
+sla:
+  published: false
+  note: No uptime commitment, credit schedule or support-response SLA is published publicly.
+roadmap:
+  published: false
+  probed:
+  - url: https://ads.life360.com/roadmap
+    status: 404
+support:
+  help_center: https://support.nativo.com/en/
+  api_support_email: support@nativo.com
+  sdk_support_email: sdksupport@nativo.com
+  publisher_email: publishers@nativo.com
+  rtb_email: rtbsupport@nativo.com
+  dead_link_in_provider_docs:
+    url: https://support.nativo.com/hc/en-us/requests/new
+    status: 404
+    note: >-
+      Nativo's own API Responses page tells a reader hitting a 500 to "contact support" at this
+      Zendesk URL. The help centre has since moved to support.nativo.com/en/ and the linked path
+      now 404s. This is a defect in the provider's docs, recorded here rather than repeated as an
+      apis.yml pointer.
+corporate_lifecycle:
+  event: acquisition
+  acquirer: Life360, Inc.
+  announced: '2025-11-10'
+  closed: '2026-01-05'
+  consideration: approximately USD 120 million (65% cash / 35% stock, per Life360 IR)
+  effects_observed:
+  - >-
+    nativo.com and www.nativo.com now 301 to https://ads.life360.com/ ("Life360 Ads featuring
+    Nativo"); developers.nativo.com resolves to ads.life360.com/developers.
+  - >-
+    The public GitHub organisation moved: github.com/NativoPlatform now 302s to a Life360
+    enterprise-managed-user SSO sign-in, and the sample-app repositories redirect to
+    github.com/life360-oss. Nativo's own SDK docs still link the old NativoPlatform URLs.
+  - >-
+    The API hosts were NOT migrated — api.nativo.com, api-docs.nativo.com, sdk.nativo.com,
+    admin.nativo.com, status.nativo.com and iab.nativo.com all remain on nativo.com.
+  source: https://ads.life360.com/newsroom/life360-to-acquire-nativo

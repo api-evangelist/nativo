@@ -1,23 +1,178 @@
 aid: nativo
 name: Nativo
-description: 'Nativo is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Nativo is a native advertising and content-distribution technology company (El Segundo, California)
+  that runs a native ad exchange and licenses a white-label ad server used by publishers to sell and
+  serve sponsored content, native display, native video and story ad formats across a network of more
+  than 20,000 apps and sites. Its platform spans an SSP, a curation marketplace, a self-serve buying
+  console, a SaaS ad renderer, and the SPARC and Brand Rank products. Nativo was acquired by Life360
+  and the acquisition closed on 5 January 2026; the corporate site now resolves to ads.life360.com
+  ("Life360 Ads featuring Nativo"), while the developer surface remains on nativo.com hosts. The
+  public developer surface is a REST Nativo API V3 at api.nativo.com/v3 covering advertisers,
+  campaigns, budgets, ads, creatives, placements, targeting and six reporting resources; a BETA
+  Ad Serving API on jadserve.postrelease.com; and first-party mobile ad SDKs for iOS, Android and
+  React Native.
+image: https://cdn.prod.website-files.com/62348aef92bf092b84891591/6297b07786c9a646645a6a52_Nativo-Open-Graph.png
 url: https://raw.githubusercontent.com/api-evangelist/nativo/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-26'
 modified: '2026-08-26'
 tags:
 - Company
-apis: []
+- Advertising
+- AdTech
+- Native Advertising
+- Programmatic Advertising
+- Supply Side Platform
+- Ad Serving
+- Marketing
+- Publishing
+- Reporting
+- Mobile SDK
+apis:
+- aid: nativo-api-v3
+  name: Nativo API V3
+  description: >-
+    The Nativo API V3 is the platform REST API for the Nativo advertising platform. It exposes
+    CRUD trafficking resources (advertisers, campaigns, budgets, ads, creatives, placements,
+    targeting parameters, tracking parameters and site-target search) and six reporting resources
+    (direct campaigns, preferred campaigns, marketplace campaigns, demand, auction and inventory)
+    that accept a shared report payload of start_date/end_date, timezone, resolution, metrics,
+    breakdown and filters. Requests are authenticated with a per-user Personal Access Token sent as
+    an HTTP Bearer credential, and every response is wrapped in a status / status_code / messages /
+    data envelope.
+  humanURL: https://api-docs.nativo.com/reference/general
+  baseURL: https://api.nativo.com/v3
+  tags:
+  - Advertising
+  - Reporting
+  - Campaign Management
+  - Ad Serving
+  properties:
+  - type: Documentation
+    url: https://api-docs.nativo.com/docs/introduction
+  - type: APIReference
+    url: https://api-docs.nativo.com/reference/general
+  - type: GettingStarted
+    url: https://api-docs.nativo.com/docs/introduction
+  - type: Authentication
+    url: authentication/nativo-authentication.yml
+  - type: ErrorCatalog
+    url: errors/nativo-problem-types.yml
+  - type: Conventions
+    url: conventions/nativo-conventions.yml
+  - type: RateLimits
+    url: rate-limits/nativo-rate-limits.yml
+  - type: DataModel
+    url: data-model/nativo-data-model.yml
+  - type: Examples
+    url: https://api-docs.nativo.com/docs/examples
+- aid: nativo-ad-serving-api
+  name: Nativo Ad Serving API (BETA)
+  description: >-
+    A BETA GET endpoint that returns a Nativo native display ad as a programmatic response so a
+    publisher can render the ad in its own technology rather than through the Nativo tag or SDK.
+    The request requires page_url and user_agent query parameters (plus visitor_id and user_ip in
+    the published examples); the site being rendered on must already exist in the Nativo system.
+    The API is unversioned and access is granted by a Nativo CSM.
+  humanURL: https://api-docs.nativo.com/reference/ad-serving-api
+  baseURL: https://jadserve.postrelease.com/adsver/api
+  tags:
+  - Ad Serving
+  - Advertising
+  properties:
+  - type: Documentation
+    url: https://api-docs.nativo.com/reference/ad-serving-api
+  - type: GettingStarted
+    url: https://api-docs.nativo.com/reference/getting-started-with-the-nativo-ad-serving-api
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: VulnerabilityDisclosure
+  url: security/nativo-vulnerability-disclosure.yml
 - type: Website
-  url: https://forgeglobal.com/nativo_stock/
+  url: https://ads.life360.com/
+- type: DeveloperPortal
+  url: https://ads.life360.com/developers
+- type: Documentation
+  url: https://api-docs.nativo.com/docs/introduction
+- type: APIReference
+  url: https://api-docs.nativo.com/reference/general
+- type: GettingStarted
+  url: https://api-docs.nativo.com/docs/introduction
+- type: Support
+  url: https://support.nativo.com/en/
+- type: Blog
+  url: https://ads.life360.com/blog
+- type: GitHubOrganization
+  url: https://github.com/life360-oss
+- type: SignUp
+  url: https://ads.life360.com/get-a-demo
+- type: Login
+  url: https://admin.nativo.com/login
+- type: TermsOfService
+  url: https://ads.life360.com/legal/terms-of-use
+- type: PrivacyPolicy
+  url: https://ads.life360.com/legal/privacy-policy
+- type: StatusPage
+  url: https://status.nativo.com/
+- type: Lifecycle
+  url: lifecycle/nativo-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/nativo-lifecycle.yml
+- type: Authentication
+  url: authentication/nativo-authentication.yml
+- type: Conventions
+  url: conventions/nativo-conventions.yml
+- type: ErrorCatalog
+  url: errors/nativo-problem-types.yml
+- type: RateLimits
+  url: rate-limits/nativo-rate-limits.yml
+- type: Plans
+  url: plans/nativo-plans-pricing.yml
+- type: Packages
+  url: packages/nativo-packages.yml
+- type: SDKs
+  url: packages/nativo-packages.yml
+- type: LLMsTxt
+  url: llms/nativo-llms.txt
+- type: Conformance
+  url: conformance/nativo-conformance.yml
+- type: Compliance
+  url: conformance/nativo-conformance.yml
+- type: DomainSecurity
+  url: security/nativo-domain-security.yml
+- type: DataModel
+  url: data-model/nativo-data-model.yml
+- type: ChangeLog
+  url: changelog/nativo-changelog.yml
+- type: Sandbox
+  url: sandbox/nativo-sandbox.yml
+- type: Security
+  url: security/nativo-vulnerability-disclosure.yml
+x-enrichment:
+  date: '2026-08-26'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: enriched
+  detail: >-
+    Nativo's developer surface is fully public and machine-readable at the docs layer — ReadMe
+    serves llms.txt plus a .md twin of every page — but it publishes no OpenAPI, no GraphQL SDL
+    and no AsyncAPI anywhere; the only machine-readable contract on any Nativo host is the IAB
+    Tech Lab sellers.json at iab.nativo.com.
+  evidence:
+  - url: https://api-docs.nativo.com/llms.txt
+    status: 200
+  - url: https://api.nativo.com/openapi.json
+    status: 404
+  - url: https://iab.nativo.com/sellers.json
+    status: 200
+  checked: '2026-08-26'

@@ -1,0 +1,109 @@
+generated: '2026-08-26'
+method: searched
+source: >-
+  https://sdk.nativo.com/changelog/all-versions, https://sdk.nativo.com/docs/releases-ios,
+  https://sdk.nativo.com/docs/releases-android, https://sdk.nativo.com/docs/releases-reactnative
+name: Nativo
+summary: >-
+  Nativo publishes a dated changelog for its MOBILE SDKs only — three separate version logs (iOS,
+  Android, React Native) indexed from a single "All versions" page. There is NO changelog for the
+  Nativo API V3: api-docs.nativo.com has no /changelog (404), the ReadMe project has its changelog
+  module disabled, and API changes are communicated only by the reference pages being edited in
+  place. The most recent activity on any Nativo surface is the Android SDK, last released
+  2025-07-31.
+scheme: semver
+surfaces:
+- surface: Nativo API V3
+  changelog_published: false
+  url: null
+  probed:
+  - url: https://api-docs.nativo.com/changelog
+    status: 404
+  note: >-
+    The ReadMe project metadata for nativo-api-docs lists modules.changelog = false. Reference
+    pages carry an `updatedAt` timestamp (most are 2025-03-20) but there is no entry-by-entry log,
+    so an integrator cannot see WHAT changed, only that a page was touched.
+- surface: Nativo Mobile Ads SDK
+  changelog_published: true
+  url: https://sdk.nativo.com/changelog/all-versions
+  logs:
+    ios: https://sdk.nativo.com/docs/releases-ios
+    android: https://sdk.nativo.com/docs/releases-android
+    react_native: https://sdk.nativo.com/docs/releases-reactnative
+current_versions:
+  ios: '7.2.1'
+  android: '7.2.7'
+  react_native: '0.4.3'
+entries:
+- surface: android
+  version: 7.2.7
+  date: '2025-07-31'
+  breaking: false
+  additions:
+  - New NtvSectionAdapter method to set the FragmentManager directly.
+  fixes:
+  - FragmentManager sometimes not found when clicking the video player.
+- surface: android
+  version: 7.2.6
+  date: '2025-04-07'
+  breaking: false
+  fixes:
+  - Namespaces not preserved after minification, causing collisions with other libraries.
+- surface: android
+  version: 7.2.5
+  date: '2025-03-10'
+  breaking: false
+  additions:
+  - Updated IAB Open Measurement SDK to v1.5.4.
+- surface: android
+  version: 7.2.4
+  date: '2024-11-01'
+  breaking: false
+  fixes:
+  - A null advertiser ID could impede privacy logic.
+  - registerInjectableClassForTemplateType selected the wrong ad template.
+- surface: ios
+  version: 7.2.1
+  date: '2024-09-20'
+  breaking: false
+  additions:
+  - Global Privacy Platform (GPP) support.
+  - Apple Privacy Manifest File implemented.
+  - Google IMA SDK updated to v3.23 for VAST.
+  fixes:
+  - Privacy consent flow.
+  - Several memory leaks caused by KMP.
+  - Improved ad request flow, enforced prefetch limit.
+  - STP video continued playing muted out of view.
+- surface: ios
+  version: 7.2.0
+  date: '2023-10-31'
+  breaking: false
+  additions:
+  - Support for pharmaceutical ads requiring ISI (Important Safety Information).
+  - One-hour cache timeout forcing a new ad request.
+- surface: ios
+  version: 7.0.0
+  date: '2023-01-30'
+  breaking: true
+  highlights: >-
+    Version 7 is a redesign built on a Kotlin Multiplatform foundation that realigns the iOS and
+    Android surfaces — automatic prefetching, key-value contextual targeting, expanded ad event
+    callbacks, less aggressive ad filtering, connection-issue handling, VAST video testing. The
+    NtvSectionDelegate protocol was revamped. Migration guides are published per platform.
+  migration: https://sdk.nativo.com/docs/migration-guides-ios
+- surface: react_native
+  version: 0.4.0
+  date: '2020-05-12'
+  breaking: false
+  additions:
+  - Compatibility with Nativo SDK v6 for iOS and Android.
+  - DFP references renamed to GAM.
+  note: >-
+    DECAY SIGNAL — this is the newest entry in the published React Native version log, while npm
+    has shipped 0.4.3 (2023-03-21) with no corresponding changelog entry. The published log and
+    the published package disagree by three releases and roughly three years.
+gaps:
+- No changelog for the Nativo API V3.
+- No RSS/Atom or JSON feed for any of the three SDK logs.
+- No dated entries for the Ad Serving API BETA.

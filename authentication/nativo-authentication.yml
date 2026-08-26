@@ -1,0 +1,67 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.nativo.com/docs/auth
+docs: https://api-docs.nativo.com/docs/auth
+name: Nativo
+summary: >-
+  The Nativo API V3 authenticates with a per-user Personal Access Token presented as an HTTP Bearer
+  credential. There is no OAuth 2.0, no OpenID Connect, no mTLS and no scope model — permissions are
+  carried by the platform role assigned to the user the token belongs to. The BETA Ad Serving API is
+  a separate surface with no documented request credential; access is provisioned out of band by a
+  Nativo CSM.
+schemes:
+- id: personal_access_token
+  type: http
+  scheme: bearer
+  applies_to: Nativo API V3 (https://api.nativo.com/v3)
+  in: header
+  header: Authorization
+  format: 'Authorization: Bearer <token>'
+  example_from_docs: 'curl -X GET "https://api.nativo.com" -H "Authorization: Bearer yourToken"'
+  issuance: >-
+    Generated from the User Edit page of the Nativo platform, under the API Access section
+    ("Generate Token"), re-authenticated with the user's own account password.
+  binding: per-user
+  rotation: >-
+    Shown once at generation and never retrievable again. A misplaced token is replaced by
+    generating a new one and disabling the old one. No expiry is documented.
+  recommended_practice: >-
+    Nativo recommends creating a dedicated API user rather than issuing a token against a person's
+    login, for monitoring and control.
+- id: ad_serving_access
+  type: none
+  applies_to: Nativo Ad Serving API BETA (https://jadserve.postrelease.com/adsver/api)
+  in: n/a
+  note: >-
+    The published request examples carry only query parameters (visitor_id, user_ip, user_agent,
+    page_url) and no credential. The docs state "Please contact your CSM to obtain access to the
+    Ad Serving API" and that the target site URL must already exist in the Nativo system, so
+    authorization appears to be by allow-listed site rather than by a request credential. Not
+    verified — the endpoint was not called.
+authorization_model:
+  style: role-based, platform-side
+  roles_published:
+  - Organizational Admin
+  - Campaign Manager
+  - Campaign Editor
+  - Publication Manager
+  - Reports Only
+  roles_source: https://ads.life360.com/legal/technical-organizational-measures
+  scopes: none
+  note: >-
+    Permission failures surface as HTTP 403 with a descriptive message; the site-targeting search
+    endpoint explicitly documents a 403 when a user queries an entity type their account cannot
+    access.
+not_supported:
+- oauth2
+- openIdConnect
+- mutualTLS
+- apiKey query parameter
+- request signing / HMAC
+probes:
+- url: https://api.nativo.com/.well-known/oauth-authorization-server
+  status: 404
+- url: https://api.nativo.com/.well-known/openid-configuration
+  status: 404
+- url: https://api.nativo.com/.well-known/oauth-protected-resource
+  status: 404

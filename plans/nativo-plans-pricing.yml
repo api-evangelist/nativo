@@ -1,0 +1,35 @@
+generated: '2026-08-26'
+method: searched
+source: https://ads.life360.com/
+name: Nativo
+plan_count: 0
+pricing_published: false
+pricing_url: null
+summary: >-
+  Nativo publishes NO pricing. There is no /pricing page on the corporate site, no rate card, no
+  plan tiers, and no API-metered price list. Every commercial path on the site terminates in
+  "Get a demo" or "Contact our sales team". Nativo sells to mid-market and enterprise brands,
+  agencies and premium publishers on negotiated media spend plus platform/service fees, and both
+  API surfaces are entitlements of an existing platform account rather than products with a
+  published price — the Ad Serving API BETA in particular states that access is obtained from a
+  Nativo CSM.
+plans: []
+access_model:
+  api_v3: >-
+    Included with a Nativo platform account. A Personal Access Token is generated from the User
+    Edit page inside admin.nativo.com; there is no self-service signup that yields API access.
+  ad_serving_api: >-
+    "Please contact your CSM to obtain access to the Ad Serving API." Additionally the site the ad
+    will render on must already exist in the Nativo system.
+  self_serve_product: >-
+    Nativo markets a "Self Serve" buying product (https://ads.life360.com/solutions/self-serve)
+    but does not publish its price or a signup-with-card flow.
+evidence:
+- url: https://ads.life360.com/pricing
+  status: 404
+- url: https://ads.life360.com/get-a-demo
+  status: 200
+  note: The demo/contact form that stands in for a pricing page.
+- url: https://api-docs.nativo.com/reference/getting-started-with-the-nativo-ad-serving-api
+  status: 200
+  note: States CSM-granted access to the Ad Serving API.

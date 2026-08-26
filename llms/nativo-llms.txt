@@ -1,0 +1,14 @@
+# Nativo API Documentation
+
+> Documentation for Nativo API
+
+Append .md to any documentation page URL to get its markdown version.
+
+## Guides
+- [Documentation](https://api-docs.nativo.com/docs.md): Nativo API documentation
+
+## API Reference
+- [Introduction](https://api-docs.nativo.com/reference/general.md): Welcome to Nativo's API V3
+- [Campaigns](https://api-docs.nativo.com/reference/campaigns.md)
+- [Reporting Overview](https://api-docs.nativo.com/reference/reporting-parameters.md)
+- [Placements](https://api-docs.nativo.com/reference/placements.md): CRUD operations for placements

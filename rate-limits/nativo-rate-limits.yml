@@ -1,0 +1,61 @@
+generated: '2026-08-26'
+method: searched
+source: https://api-docs.nativo.com/docs/best-practices
+docs: https://api-docs.nativo.com/docs/best-practices
+name: Nativo
+api: Nativo API V3
+limit_count: 2
+enforced: unknown
+summary: >-
+  Nativo publishes call-volume GUIDANCE, not an enforced, header-signalled rate limit. Two numeric
+  ceilings appear on the API Best Practices page and nowhere else. No rate-limit response headers,
+  no 429, and no retry semantics are documented anywhere in the Nativo API V3 reference, so an
+  agent has no runtime signal telling it how close it is to a limit or when it may retry.
+rate_limits:
+- id: recommended-calls-per-hour
+  scope: per report / per data set
+  window: 1 hour
+  limit: 10
+  burst: not stated
+  kind: recommendation
+  quote: >-
+    "The data in our reporting API is updated every 5-10 minutes, so querying the same report more
+    than a few times per hour will result in duplicate data and unnecessary stress on our API. We
+    recommended limiting the number of calls to 10 or less per hour."
+  source: https://api-docs.nativo.com/docs/best-practices
+- id: max-calls-per-hour-same-data
+  scope: per data set (same data)
+  window: 1 hour
+  limit: 100
+  burst: not stated
+  kind: caution / stated ceiling
+  quote: >-
+    "Caution: Limit Data Overload — Please ensure that you limit the number of calls to no more
+    than 100 calls per hour for the same data."
+  source: https://api-docs.nativo.com/docs/best-practices
+response_headers:
+  documented: false
+  headers: []
+  note: >-
+    No X-RateLimit-*, no RFC 9238/draft RateLimit-*, no Retry-After. The API Responses page
+    enumerates 200, 400, 403, 500 and 503 and does not list 429, so there is no documented status
+    code for exhaustion either.
+status_on_exhaustion: not documented
+related_guidance:
+- >-
+  Prefer a large page_size (Nativo's example: 50000) or omit page_size, to keep a report to a
+  single call rather than many pages.
+- >-
+  Query all campaigns in one call and use `breakdown` to split by campaign afterwards, rather than
+  looping one call per campaign.
+- >-
+  Pull historic data once. Data older than the current and previous month does not change, so
+  recurring calls for prior years are explicitly discouraged.
+- >-
+  For near-real-time reads use a 6-hour window, 24 hours maximum, and remember the underlying data
+  only refreshes every 5-10 minutes.
+ad_serving_api:
+  limit_count: 0
+  note: >-
+    No limits are published for the BETA Ad Serving API at jadserve.postrelease.com. Access is
+    granted by a CSM and the docs do not state a call ceiling.

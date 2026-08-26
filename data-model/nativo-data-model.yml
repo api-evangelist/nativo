@@ -1,0 +1,254 @@
+generated: '2026-08-26'
+method: derived
+source: >-
+  derived from the published Nativo API V3 reference pages (no OpenAPI exists) —
+  https://api-docs.nativo.com/reference/advertisers, /campaigns, /budgets, /ads, /creatives,
+  /placements, /targeting, /tracking-parameters, /site-targets, /preview-links,
+  /reporting-parameters
+name: Nativo
+api: Nativo API V3
+base_url: https://api.nativo.com/v3
+derivation_note: >-
+  Nativo publishes no machine-readable contract, so this graph is derived from the endpoint tables
+  and the verbatim JSON response examples on the reference pages, NOT from a spec. Every entity,
+  field and relationship below appears in a published example or parameter table. Nothing is
+  inferred beyond the id-reference fields the examples actually contain.
+identifiers:
+  style: bare integer surrogate keys
+  prefixes: none — Nativo ids carry no type prefix, so an id alone does not tell you its entity
+  note: >-
+    This is a real agent hazard: campaign_id 2001 and budget_id 2001 are indistinguishable as
+    values. Context comes only from the field name.
+entities:
+- name: Advertiser
+  endpoints:
+  - GET /v3/advertisers
+  - GET /v3/advertisers/[id]
+  - POST /v3/advertisers
+  - PUT /v3/advertisers/[id]
+  docs: https://api-docs.nativo.com/reference/advertisers
+  key: id
+  fields_observed: [id, name, logo_url, vertical]
+  note: Advertiser verticals are an enumerated reference list published separately.
+- name: Campaign
+  endpoints:
+  - GET /v3/campaigns
+  - GET /v3/campaigns/[id]
+  - POST /v3/campaigns
+  - PUT /v3/campaigns/[id]
+  - DELETE /v3/campaigns/[id]
+  docs: https://api-docs.nativo.com/reference/campaigns
+  key: id
+  fields_observed:
+  - id
+  - name
+  - advertiser_id
+  - advertiser_name
+  - advertiser_logo_url_override
+  - is_enabled
+  - serving_status
+  - third_party_tag
+  read_only_fields: [serving_status, third_party_tag]
+  enums:
+    serving_status: [not_ready, paused, not_serving, pre_flight, in_flight, completed, deleted]
+  list_filters: [advertiser_id]
+  delete_semantics: soft — record remains readable with serving_status "deleted"
+- name: Budget
+  endpoints:
+  - POST /v3/budgets
+  - GET /v3/budgets/[id]
+  - PUT /v3/budgets/[id]
+  docs: https://api-docs.nativo.com/reference/budgets
+  key: id
+  fields_observed:
+  - id
+  - name
+  - campaign_id
+  - amount
+  - rate
+  - rate_type
+  - bid_type
+  - delivery_type
+  - spend_schedule
+  - marketplace
+  - ad_server_type
+  - allowed_ad_types
+  - flight_date_start
+  - flight_date_end
+  - is_enabled
+  - serving_status
+  - placements
+  - targeting
+  enums_observed:
+    rate_type: [viewable_cpm]
+    bid_type: [fixed]
+    delivery_type: [impressions]
+    spend_schedule: [lifetime]
+    marketplace: [nativo_premium]
+    ad_server_type: [nativo]
+    allowed_ad_types: [native_article]
+  note: >-
+    Enum values above are the values that appear in the published example, not a complete
+    enumeration — the docs do not publish the full option sets for these fields.
+  embedded:
+  - name: targeting
+    shape: 'object of targeting dimensions, each an array of {id, name, include_type}'
+    dimensions_observed: [brand_safety]
+    include_type_values: [include, exclude]
+    docs: https://api-docs.nativo.com/reference/targeting
+  - name: placements
+    shape: object
+- name: Ad
+  endpoints:
+  - GET /v3/ads
+  - GET /v3/ads/[id]
+  - POST /v3/ads
+  - PUT /v3/ads/[id]
+  docs: https://api-docs.nativo.com/reference/ads
+  key: id
+  fields_observed: [id, name, campaign_id, budget_id, creative_id]
+  note: >-
+    The Ad is the join entity — it is the only object carrying campaign_id, budget_id AND
+    creative_id at once.
+- name: Creative
+  endpoints:
+  - POST /v3/creatives
+  - GET /v3/creatives/[id]
+  - PUT /v3/creatives/[id]
+  - DELETE /v3/creatives/[id]
+  docs: https://api-docs.nativo.com/reference/creatives
+  key: id
+  delete_semantics: soft
+- name: Placement
+  endpoints:
+  - POST /placements
+  - GET /placements/[id]
+  - PUT /placements/[id]
+  docs: https://api-docs.nativo.com/reference/placements
+  key: id
+  path_note: >-
+    Published WITHOUT the /v3 prefix in the reference table, unlike every other CRUD resource.
+    Recorded as published; not corrected here.
+  fields_observed:
+  - id
+  - name
+  - section_id
+  - status
+  - is_previewable
+  - location
+  - devices
+  - dfp_settings
+  - injection_mode
+  - mapping_value
+  - position
+  - priority
+  - selector
+  - enable_video
+  - video_devices
+  - ifu_id
+  - clp_id
+  - pub_network_clp_id
+  - display_sizes
+  enums_observed:
+    status: [inactive]
+    location: [right_rail]
+    devices: [desktop, mobile, tablet]
+    injection_mode: [before]
+  embedded:
+  - name: display_sizes
+    shape: 'array of {id (e.g. "300x50"), devices[]}'
+  - name: dfp_settings
+    shape: '{rendering_mode, parent_count}'
+- name: SiteTarget
+  endpoints:
+  - GET /v3/search/targeting/sites/{entity}
+  docs: https://api-docs.nativo.com/reference/site-targets
+  entity_values: [packages, publishers, publications, placements]
+  query_params: [marketplace_id]
+  note: >-
+    A search/lookup surface, not a CRUD resource — returns the targetable inventory options a
+    budget or ad may include or exclude. Returns 403 with a descriptive message when the account
+    lacks access to the requested entity type.
+- name: ArticlePreviewLink
+  endpoints:
+  - GET /v3/data/article-previews/campaign/[campaign_id]
+  docs: https://api-docs.nativo.com/reference/preview-links
+  fields_observed:
+  - article_preview_link
+  - creative_id
+  - creative_name
+  - publication_id
+  - publication_name
+  - publication_url
+- name: ReportResult
+  endpoints:
+  - POST /data/direct
+  - POST /data/preferred
+  - POST /data/marketplace
+  - POST /data/demand
+  - POST /data/auction
+  - POST /data/inventory
+  docs: https://api-docs.nativo.com/reference/reporting-parameters
+  key: none — result rows are keyed by the requested breakdown
+  request_shape:
+    required: [start_date, end_date]
+    optional: [timezone, resolution, metrics, breakdown, filters, exclude_filters, page, page_size, sort_by, sort_order]
+  note: >-
+    Reporting is a query language expressed as a POST body, not a resource. The metric, breakdown
+    and filter option sets are published as separate reference pages and are the only part of the
+    API Nativo reserves the right to deprecate.
+relationships:
+- from: Campaign
+  to: Advertiser
+  type: belongs_to
+  via: advertiser_id
+  evidence: 'GET /v3/campaigns example carries advertiser_id and advertiser_name'
+- from: Advertiser
+  to: Campaign
+  type: has_many
+  via: 'GET /v3/campaigns?advertiser_id='
+- from: Budget
+  to: Campaign
+  type: belongs_to
+  via: campaign_id
+- from: Campaign
+  to: Budget
+  type: has_many
+  via: campaign_id on Budget
+- from: Ad
+  to: Campaign
+  type: belongs_to
+  via: campaign_id
+- from: Ad
+  to: Budget
+  type: belongs_to
+  via: budget_id
+- from: Ad
+  to: Creative
+  type: belongs_to
+  via: creative_id
+- from: Creative
+  to: Ad
+  type: has_many
+  via: creative_id on Ad
+- from: Placement
+  to: Section
+  type: belongs_to
+  via: section_id
+  note: >-
+    Section is referenced by id but has no published CRUD endpoint in the API V3 reference; it is
+    the SDK-side unit (initSectionWithAdapter takes a section URL key).
+- from: Budget
+  to: SiteTarget
+  type: has_many
+  via: 'targeting / placements objects, populated from GET /v3/search/targeting/sites/{entity}'
+- from: ArticlePreviewLink
+  to: Campaign
+  type: belongs_to
+  via: 'campaign_id path parameter'
+- from: ArticlePreviewLink
+  to: Creative
+  type: belongs_to
+  via: creative_id
+hierarchy: 'Advertiser -> Campaign -> Budget -> Ad -> Creative'
+render: none — no subway/ diagram in this repo
