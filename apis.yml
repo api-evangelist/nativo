@@ -12,6 +12,17 @@ description: >-
   campaigns, budgets, ads, creatives, placements, targeting and six reporting resources; a BETA
   Ad Serving API on jadserve.postrelease.com; and first-party mobile ad SDKs for iOS, Android and
   React Native.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/62348aef92bf092b84891591/6297b07786c9a646645a6a52_Nativo-Open-Graph.png
 url: https://raw.githubusercontent.com/api-evangelist/nativo/refs/heads/main/apis.yml
 x-type: company
