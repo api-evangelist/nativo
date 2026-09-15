@@ -1,17 +1,15 @@
 aid: nativo
 name: Nativo
-description: >-
-  Nativo is a native advertising and content-distribution technology company (El Segundo, California)
-  that runs a native ad exchange and licenses a white-label ad server used by publishers to sell and
-  serve sponsored content, native display, native video and story ad formats across a network of more
-  than 20,000 apps and sites. Its platform spans an SSP, a curation marketplace, a self-serve buying
-  console, a SaaS ad renderer, and the SPARC and Brand Rank products. Nativo was acquired by Life360
-  and the acquisition closed on 5 January 2026; the corporate site now resolves to ads.life360.com
-  ("Life360 Ads featuring Nativo"), while the developer surface remains on nativo.com hosts. The
-  public developer surface is a REST Nativo API V3 at api.nativo.com/v3 covering advertisers,
-  campaigns, budgets, ads, creatives, placements, targeting and six reporting resources; a BETA
-  Ad Serving API on jadserve.postrelease.com; and first-party mobile ad SDKs for iOS, Android and
-  React Native.
+description: Nativo is a native advertising and content-distribution technology company (El Segundo, California)
+  that runs a native ad exchange and licenses a white-label ad server used by publishers to sell and serve
+  sponsored content, native display, native video and story ad formats across a network of more than 20,000
+  apps and sites. Its platform spans an SSP, a curation marketplace, a self-serve buying console, a SaaS
+  ad renderer, and the SPARC and Brand Rank products. Nativo was acquired by Life360 and the acquisition
+  closed on 5 January 2026; the corporate site now resolves to ads.life360.com ("Life360 Ads featuring
+  Nativo"), while the developer surface remains on nativo.com hosts. The public developer surface is a
+  REST Nativo API V3 at api.nativo.com/v3 covering advertisers, campaigns, budgets, ads, creatives, placements,
+  targeting and six reporting resources; a BETA Ad Serving API on jadserve.postrelease.com; and first-party
+  mobile ad SDKs for iOS, Android and React Native.
 deliveryModel:
   model: saas
   open_source: false
@@ -59,17 +57,15 @@ tags:
 - Reporting
 - Mobile SDK
 apis:
-- aid: nativo-api-v3
+- aid: nativo:nativo-api-v3
   name: Nativo API V3
-  description: >-
-    The Nativo API V3 is the platform REST API for the Nativo advertising platform. It exposes
-    CRUD trafficking resources (advertisers, campaigns, budgets, ads, creatives, placements,
-    targeting parameters, tracking parameters and site-target search) and six reporting resources
-    (direct campaigns, preferred campaigns, marketplace campaigns, demand, auction and inventory)
-    that accept a shared report payload of start_date/end_date, timezone, resolution, metrics,
-    breakdown and filters. Requests are authenticated with a per-user Personal Access Token sent as
-    an HTTP Bearer credential, and every response is wrapped in a status / status_code / messages /
-    data envelope.
+  description: The Nativo API V3 is the platform REST API for the Nativo advertising platform. It exposes
+    CRUD trafficking resources (advertisers, campaigns, budgets, ads, creatives, placements, targeting
+    parameters, tracking parameters and site-target search) and six reporting resources (direct campaigns,
+    preferred campaigns, marketplace campaigns, demand, auction and inventory) that accept a shared report
+    payload of start_date/end_date, timezone, resolution, metrics, breakdown and filters. Requests are
+    authenticated with a per-user Personal Access Token sent as an HTTP Bearer credential, and every response
+    is wrapped in a status / status_code / messages / data envelope.
   humanURL: https://api-docs.nativo.com/reference/general
   baseURL: https://api.nativo.com/v3
   tags:
@@ -96,14 +92,13 @@ apis:
     url: data-model/nativo-data-model.yml
   - type: Examples
     url: https://api-docs.nativo.com/docs/examples
-- aid: nativo-ad-serving-api
+- aid: nativo:nativo-ad-serving-api
   name: Nativo Ad Serving API (BETA)
-  description: >-
-    A BETA GET endpoint that returns a Nativo native display ad as a programmatic response so a
-    publisher can render the ad in its own technology rather than through the Nativo tag or SDK.
-    The request requires page_url and user_agent query parameters (plus visitor_id and user_ip in
-    the published examples); the site being rendered on must already exist in the Nativo system.
-    The API is unversioned and access is granted by a Nativo CSM.
+  description: A BETA GET endpoint that returns a Nativo native display ad as a programmatic response
+    so a publisher can render the ad in its own technology rather than through the Nativo tag or SDK.
+    The request requires page_url and user_agent query parameters (plus visitor_id and user_ip in the
+    published examples); the site being rendered on must already exist in the Nativo system. The API is
+    unversioned and access is granted by a Nativo CSM.
   humanURL: https://api-docs.nativo.com/reference/ad-serving-api
   baseURL: https://jadserve.postrelease.com/adsver/api
   tags:
@@ -124,7 +119,8 @@ common:
   url: https://apis.io/providers/life360/
   name: Life360
   x-relationship: acquired
-  x-evidence: "Nativo was acquired by Life360 and the acquisition closed on 5 January 2026; the corporate site now resolves to ads."
+  x-evidence: Nativo was acquired by Life360 and the acquisition closed on 5 January 2026; the corporate
+    site now resolves to ads.
 - type: VulnerabilityDisclosure
   url: security/nativo-vulnerability-disclosure.yml
 - type: Website
@@ -195,11 +191,10 @@ x-enrichment:
 x-coverage:
   state: covered
   reason: enriched
-  detail: >-
-    Nativo's developer surface is fully public and machine-readable at the docs layer — ReadMe
-    serves llms.txt plus a .md twin of every page — but it publishes no OpenAPI, no GraphQL SDL
-    and no AsyncAPI anywhere; the only machine-readable contract on any Nativo host is the IAB
-    Tech Lab sellers.json at iab.nativo.com.
+  detail: Nativo's developer surface is fully public and machine-readable at the docs layer — ReadMe serves
+    llms.txt plus a .md twin of every page — but it publishes no OpenAPI, no GraphQL SDL and no AsyncAPI
+    anywhere; the only machine-readable contract on any Nativo host is the IAB Tech Lab sellers.json at
+    iab.nativo.com.
   evidence:
   - url: https://api-docs.nativo.com/llms.txt
     status: 200
