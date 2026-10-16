@@ -2,11 +2,11 @@
   "repo": "nativo",
   "feeds": [
     {
-      "source": "https://support.nativo.com/en/",
-      "feed_url": "https://support.nativo.com/en/feed.xml",
+      "source": "https://ads.life360.com/blog",
+      "feed_url": "https://ads.life360.com/blog",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "none"
     },
     {
       "source": "https://support.nativo.com/en/feed.xml",
@@ -17,5 +17,5 @@
     }
   ],
   "post_count": 25,
-  "fetched": "2026-10-03T12:30:02Z"
+  "fetched": "2026-10-10T13:15:00Z"
 }
