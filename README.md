@@ -64,5 +64,110 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Nativo is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/nativo_stock/
+Nativo is a native advertising and content-distribution technology company (El Segundo, California) that runs a native ad exchange and licenses a white-label ad server used by publishers to sell and serve sponsored content, native display, native video and story ad formats across a network of more than 20,000 apps and sites. Its platform spans an SSP, a curation marketplace, a self-serve buying console, a SaaS ad renderer, and the SPARC and Brand Rank products. Nativo was acquired by Life360 and the acquisition closed on 5 January 2026; the corporate site now resolves to ads.life360.com ("Life360 Ads featuring Nativo"), while the developer surface remains on nativo.com hosts. The public developer surface is a REST Nativo API V3 at api.nativo.com/v3 covering advertisers, campaigns, budgets, ads, creatives, placements, targeting and six reporting resources; a BETA Ad Serving API on jadserve.postrelease.com; and first-party mobile ad SDKs for iOS, Android and React Native.
+
+**Areas:** Company · Advertising · AdTech · Native Advertising · Programmatic Advertising · Supply Side Platform · Ad Serving · Marketing · Publishing · Reporting · Mobile SDK
+
+## Nativo on APIs.io
+
+Everything profiled for Nativo is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/nativo/](https://apis.io/providers/nativo/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Nativo API V3](https://apis.io/apis/nativo/nativo-api-v3/) — The Nativo API V3 is the platform REST API for the Nativo advertising platform. It exposes CRUD trafficking resources (advertisers, campaigns, budgets, ads,…
+- [Nativo Ad Serving API (BETA)](https://apis.io/apis/nativo/nativo-ad-serving-api/) — A BETA GET endpoint that returns a Nativo native display ad as a programmatic response so a publisher can render the ad in its own technology rather than…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Nativo Authentication](https://apis.io/security/nativo/nativo-authentication/)
+- [Nativo Domain Security](https://apis.io/security/nativo/nativo-domain-security/)
+- [Nativo Vulnerability Disclosure](https://apis.io/security/nativo/nativo-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Nativo Plans Pricing](https://apis.io/plans/nativo/nativo-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Nativo Rate Limits](https://apis.io/rate-limits/nativo/nativo-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://ads.life360.com/)
+- [Documentation](https://api-docs.nativo.com/docs/introduction)
+- [Getting started](https://api-docs.nativo.com/docs/introduction)
+- [API reference](https://api-docs.nativo.com/reference/general)
+- [Sign up](https://ads.life360.com/get-a-demo)
+- [Support](https://support.nativo.com/en/)
+- [Blog](https://ads.life360.com/blog)
+- [Terms of service](https://ads.life360.com/legal/terms-of-use)
+- [Privacy policy](https://ads.life360.com/legal/privacy-policy)
+- [GitHub](https://github.com/life360-oss)
+- [Status](https://status.nativo.com/)
+
+## API Evangelist rating
+
+**Kin Score 43.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 6.5 |
+| Contract governance | 18.2 |
+| Operational transparency | 73.7 |
+| Developer ergonomics | 57.1 |
+| Access clarity | 42.1 |
+
+**Agent readiness 9.2** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | documented (partial credit) |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 35.3** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/nativo/](https://apis.io/providers/nativo/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Nativo: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/nativo/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
